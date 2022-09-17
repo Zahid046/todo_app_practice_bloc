@@ -27,30 +27,24 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 50,
-      child: RaisedButton(
-        elevation: 0.0,
-        highlightElevation: 0.0,
-        color: color ??
-            (ThemeManager.isDark(context)
-                ? ColorManager.greyColor
-                : Colors.white),
-        padding:
-            padding ?? const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-        shape: RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(12),
-            side:
-                BorderSide(color: borderColor ?? Colors.transparent, width: 2)),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 0.0,
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius ?? BorderRadius.circular(12), side: BorderSide(color: borderColor ?? Colors.transparent, width: 2)),
+        ),
+        //  highlightElevation: 0.0,
+        // color: color ??
+        //     (ThemeManager.isDark(context)
+        //         ? ColorManager.greyColor
+        //         : Colors.white),
+
         onPressed: () {
           onTap!.call();
         },
         child: Text(
           text ?? '',
-          style: TextStyle(
-              color: fontColor ??
-                  (ThemeManager.isDark(context)
-                      ? Colors.white
-                      : ColorManager.purple),
-              fontWeight: FontWeight.w700),
+          style: TextStyle(color: fontColor ?? (ThemeManager.isDark(context) ? Colors.white : ColorManager.purple), fontWeight: FontWeight.w700),
         ),
       ),
     );

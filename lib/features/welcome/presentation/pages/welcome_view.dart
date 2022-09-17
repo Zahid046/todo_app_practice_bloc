@@ -61,10 +61,7 @@ class WelcomeView extends StatelessWidget {
                     ),
                     Text(
                       'Taskez'.toUpperCase(),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 60),
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 60),
                     ),
                   ],
                 ),
