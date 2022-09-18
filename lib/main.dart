@@ -18,19 +18,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ShowTaskBloc(sl(), sl(), sl())..getAllTasks())
+        BlocProvider(create: (_) => ShowTaskBloc(sl(), sl(), sl())..getAllTasks()),
       ],
       child: DynamicTheme(
-        builder: (BuildContext conetxt , ThemeData theme)=>MaterialApp(
+        builder: (
+          BuildContext context,
+          ThemeData theme,
+        ) =>
+            MaterialApp(
           title: 'Taskez',
           theme: theme,
           debugShowCheckedModeBanner: false,
           home: const WelcomeView(),
         ),
-          themeCollection: ThemeCollection(themes: {
+        themeCollection: ThemeCollection(
+          themes: {
             1: ThemeManager.theme,
             0: ThemeManager.darkTheme,
-          })
+          },
+        ),
       ),
     );
   }

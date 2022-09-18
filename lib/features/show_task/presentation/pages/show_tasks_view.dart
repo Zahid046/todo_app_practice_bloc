@@ -14,9 +14,7 @@ class ShowTasksView extends StatelessWidget {
     ShowTaskBloc homeBloc = context.read<ShowTaskBloc>();
     return Scaffold(
       appBar: AppBar(
-        actions:const [
-          ModeSwitcher()
-        ],
+        actions: const [ModeSwitcher()],
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () async => homeBloc.goToAddTask(context),

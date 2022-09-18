@@ -15,10 +15,13 @@ import '../pages/all_tasks_view.dart';
 
 class ShowTaskBloc extends Cubit<ShowTaskState> {
   final AllTasksUseCase _allTasksUseCase;
-  final DeleteTaskUseCase _deleteTask;
-  final UpdateTaskUSeCase _updateTask;
-  ShowTaskBloc(this._allTasksUseCase, this._deleteTask, this._updateTask)
-      : super(HomeEmpty());
+  final DeleteTaskUseCase _deleteTaskUseCase;
+  final UpdateTaskUSeCase _updateTaskUseCase;
+  ShowTaskBloc(
+    this._allTasksUseCase,
+    this._deleteTaskUseCase,
+    this._updateTaskUseCase,
+  ) : super(HomeEmpty());
 
   int currentPage = 0;
 
@@ -48,8 +51,7 @@ class ShowTaskBloc extends Cubit<ShowTaskState> {
 
   void goToAddTask(BuildContext context) async {
     //Navigate
-    MaterialPageRoute materialPageRoute =
-        MaterialPageRoute(builder: (_) => const AddTask());
+    MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (_) => const AddTask());
     await Navigator.of(context).push(materialPageRoute);
     //Update
     getAllTasks();
@@ -64,9 +66,7 @@ class ShowTaskBloc extends Cubit<ShowTaskState> {
   }
 
   Future navigateToTaskDetail(BuildContext context, TaskEntity task) async {
-    MaterialPageRoute materialPageRoute = MaterialPageRoute(
-        builder: (_) => const TaskDetailView(),
-        settings: RouteSettings(arguments: task));
+    MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (_) => const TaskDetailView(), settings: RouteSettings(arguments: task));
     return await Navigator.of(context).push(materialPageRoute);
   }
 
@@ -86,23 +86,19 @@ class ShowTaskBloc extends Cubit<ShowTaskState> {
   }
 
   //Working with Database
-  Future<void> getAllTasks() async => (await _allTasksUseCase(NoParams()))
-          .fold((e) => emit(HomeError(e.msg)), (tasks) {
+  Future<void> getAllTasks() async => (await _allTasksUseCase(NoParams())).fold((e) => emit(HomeError(e.msg)), (tasks) {
         this.tasks = tasks;
         updateLists();
         emit(HomeLoaded());
       });
 
-  Future<void> deleteTask(TaskEntity task) async =>
-      (await _deleteTask(TaskParams(taskEntity: task)))
-          .fold((e) => log(e.msg ?? ''), (task) {
+  Future<void> deleteTask(TaskEntity task) async => (await _deleteTaskUseCase(TaskParams(taskEntity: task))).fold((e) => log(e.msg ?? ''), (task) {
         tasks.removeWhere((element) => element.id == task.id);
         updateLists();
         emit(HomeLoaded());
       });
 
-  Future<void> updateTask(TaskEntity task) async =>
-      (await _updateTask(TaskParams(taskEntity: task))).fold(
+  Future<void> updateTask(TaskEntity task) async => (await _updateTaskUseCase(TaskParams(taskEntity: task))).fold(
         (e) => log(e.msg ?? ''),
         (task) => emit(HomeLoaded()),
       );
